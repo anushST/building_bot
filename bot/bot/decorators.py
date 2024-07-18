@@ -5,10 +5,10 @@ from functools import wraps
 
 from telegram.error import BadRequest
 
-from .exceptions import LangNotChosenError
+from .exceptions import LangNotChosenError, MultipleMessageIdInDB
 from display_data import texts
 
-logger = logging.getLogger('__main__')
+logger = logging.getLogger('main')
 
 
 def safe_handler_method(func):
@@ -22,6 +22,8 @@ def safe_handler_method(func):
         except LangNotChosenError:
             inform_user = True
             message = texts.LANG_NOT_CHOSEN_ERROR_TEXT
+        except MultipleMessageIdInDB:
+            inform_user = True
         except BadRequest as e:
             if not str(e) == ('Message is not modified: specified new message '
                               'content and reply markup are exactly the same '

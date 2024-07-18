@@ -3,7 +3,8 @@ import logging
 from os import getenv
 
 from dotenv import load_dotenv
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import (InlineKeyboardButton, InlineKeyboardMarkup,
+                      InputMediaPhoto, Update)
 from telegram.ext import (CallbackContext, CallbackQueryHandler,
                           CommandHandler, Filters, MessageHandler, Updater)
 
@@ -13,9 +14,9 @@ from .decorators import safe_handler_method
 from .exceptions import BadRequestError, LangNotChosenError, NoTokenError
 from display_data import buttons, texts
 from utils.paginators import Paginator
-from utils.shortcuts import send_photo
+from utils.shortcuts import edit_message_caption, send_photo
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('main')
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s '
                               '(def %(funcName)s:%(lineno)d)')
@@ -82,6 +83,8 @@ def main_menu(update: Update, context: CallbackContext) -> None:
         raise LangNotChosenError
 
     keyboard = [
+        [InlineKeyboardButton(buttons.PHOTO_GALLERY_BUTTON[lang],
+                              callback_data=constants.PHOTO_GALLERY_CALLBACK)],
         [InlineKeyboardButton(buttons.HOUSE_PLAN_BUTTON[lang],
                               callback_data=constants.BLOCK_PLAN_CALLBACK)],
         [InlineKeyboardButton(buttons.ABOUT_COMPANY_BUTTON[lang],
@@ -103,7 +106,7 @@ def main_menu(update: Update, context: CallbackContext) -> None:
         )
         user_object.edit_field('main_message_id', message.message_id)
     else:
-        query.edit_message_caption(texts.WELCOME_TEXT[lang], reply_markup)
+        edit_message_caption(query, texts.WELCOME_TEXT[lang], reply_markup)
     if 'lang_message_id' in context.bot_data:
         context.bot.delete_message(chat_id,
                                    context.bot_data['lang_message_id'])
@@ -127,8 +130,8 @@ def contact_info(update: Update, context: CallbackContext) -> None:
                               callback_data=constants.MAIN_MENU_CALLBACK)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    query.edit_message_caption(texts.CONTACTS_TEXT[lang], reply_markup,
-                               parse_mode='HTML')
+    edit_message_caption(query, texts.CONTACTS_TEXT[lang], reply_markup,
+                         parse_mode='HTML')
 
 
 @safe_handler_method
@@ -144,8 +147,8 @@ def about_company(update: Update, context: CallbackContext) -> None:
                               callback_data=constants.MAIN_MENU_CALLBACK)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    query.edit_message_caption(texts.ABOUT_COMPANY_TEXT[lang], reply_markup,
-                               parse_mode='HTML')
+    edit_message_caption(query, texts.ABOUT_COMPANY_TEXT[lang], reply_markup,
+                         parse_mode='HTML')
 
 
 @safe_handler_method
@@ -194,7 +197,7 @@ def building_parts(update: Update, context: CallbackContext) -> None:
                                             message.message_id)
 
     else:
-        query.edit_message_caption(caption, reply_markup)
+        edit_message_caption(query, caption, reply_markup, parse_mode='HTML')
 
 
 @safe_handler_method
@@ -225,7 +228,7 @@ def floors(update: Update, context: CallbackContext) -> None:
     reply_markup = InlineKeyboardMarkup(keyboard)
     block_info_message_id = db_queries.User(
         chat_id).get_field('block_info_message_id')
-    caption = texts.BUILDING_PLAN_TEXT[lang]
+    caption = texts.BUILDING_PARTS[block_name][lang]['text']
     if not block_info_message_id:
         message = send_photo(
             url=texts.BUILDING_PARTS[block_name]['default_photo'],
@@ -243,7 +246,7 @@ def floors(update: Update, context: CallbackContext) -> None:
         db_queries.User(chat_id).edit_field('block_info_message_id',
                                             message.message_id)
     else:
-        query.edit_message_caption(caption, reply_markup)
+        edit_message_caption(query, caption, reply_markup, parse_mode='HTML')
 
 
 @safe_handler_method
@@ -287,6 +290,25 @@ def floor_info(update: Update, context: CallbackContext) -> None:
                                             message.message_id)
 
 
+@safe_handler_method
+def show_gallery(update: Update, context: CallbackContext) -> None:
+    """Send photo_gallery."""
+    query = update.callback_query
+    chat_id = update.effective_chat.id
+    lang = db_queries.User(chat_id).get_field('lang')
+    if lang is None:
+        raise LangNotChosenError
+
+    photos = []
+
+    for photo_url in constants.photo_gallery_urls:
+        with open(photo_url, 'rb') as file:
+            photos.append(InputMediaPhoto(file))
+
+    query.message.reply_media_group(media=photos)
+
+
+@safe_handler_method
 def delete_user_message(update: Update, context: CallbackContext) -> None:
     """Delete all messages sent by user."""
     update.message.delete()
@@ -297,10 +319,10 @@ def main() -> None:
     load_dotenv()
     TELEGRAM_TOKEN = getenv('TELEGRAM_TOKEN')
     check_token(TELEGRAM_TOKEN)
-    updater = Updater(TELEGRAM_TOKEN)
-
-    dispatcher = updater.dispatcher
     try:
+        updater = Updater(TELEGRAM_TOKEN)
+        dispatcher = updater.dispatcher
+
         dispatcher.add_handler(CommandHandler(constants.START_COMMAND, start))
         dispatcher.add_handler(CallbackQueryHandler(
             save_lang, pattern=constants.LANG_PATTERN))
@@ -312,6 +334,8 @@ def main() -> None:
             about_company, pattern=constants.COMPANY_DESC_CALLBACK))
         dispatcher.add_handler(CallbackQueryHandler(
             building_parts, pattern=f'^{constants.BLOCKS_PATTERN}'))
+        dispatcher.add_handler(CallbackQueryHandler(
+            show_gallery, pattern=constants.PHOTO_GALLERY_CALLBACK))
         dispatcher.add_handler(CallbackQueryHandler(
             floors, pattern=f'^{constants.FLOORS_PATTERN}'))
         dispatcher.add_handler(CallbackQueryHandler(

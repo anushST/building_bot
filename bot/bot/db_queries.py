@@ -3,8 +3,8 @@ import sqlite3
 from typing import Any
 
 from .constants import DATABASE
-from .exceptions import (FieldDoesNotExistError, ObjectDoesNotExistError,
-                         ValidationError)
+from .exceptions import (FieldDoesNotExistError, MultipleMessageIdInDB,
+                         ObjectDoesNotExistError, ValidationError)
 
 
 USERS_TABLE_FIELDS = ('chat_id', 'lang', 'main_message_id',
@@ -99,11 +99,20 @@ class User:
         block_info_message_id = self.get_field('block_info_message_id')
         floor_info_message_id = self.get_field('floor_info_message_id')
 
+        obj_to_return = None
+        none_messages = 0
+
         if main_message_id is not None:
-            return (main_message_id, 'main_message_id')
-        elif block_info_message_id is not None:
-            return (block_info_message_id, 'block_info_message_id')
-        elif floor_info_message_id is not None:
-            return (floor_info_message_id, 'floor_info_message_id')
+            obj_to_return = (main_message_id, 'main_message_id')
+            none_messages += 1
+        if block_info_message_id is not None:
+            obj_to_return = (block_info_message_id, 'block_info_message_id')
+            none_messages += 1
+        if floor_info_message_id is not None:
+            obj_to_return = (floor_info_message_id, 'floor_info_message_id')
+            none_messages += 1
+
+        if none_messages == 1:
+            return obj_to_return
         else:
-            return None
+            raise MultipleMessageIdInDB

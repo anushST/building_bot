@@ -41,3 +41,9 @@ class LangNotChosenError(Exception):
     """Raises when language not chosen."""
 
     pass
+
+
+class MultipleMessageIdInDB(Exception):
+    """Raise when in db we have two or more message_id."""
+
+    pass

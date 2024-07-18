@@ -1,6 +1,6 @@
 """Constants of bot package."""
 # Images
-MAIN_IMAGE = 'main.jpeg'
+MAIN_IMAGE = 'main.jpg'
 
 # Languages
 TJ = 'tj'
@@ -22,6 +22,7 @@ COMPANY_DESC_CALLBACK = 'company_desc'
 BLOCK_PLAN_CALLBACK = BLOCKS_PATTERN + '1'
 FLOORS_CALLBACK = FLOOR_PATTERN + '1'
 MAIN_MENU_CALLBACK = 'main_menu'
+PHOTO_GALLERY_CALLBACK = 'photo_gallery'
 
 # Commands
 START_COMMAND = 'start'
@@ -40,3 +41,12 @@ ITEMS_PER_PAGE = 10
 
 # Database
 DATABASE = 'bot/db.sqlite3'
+
+# Photo Gallery
+photo_gallery_urls = [
+    'static/gallery/photo1.jpg',
+    'static/gallery/photo2.jpg',
+    'static/gallery/photo3.jpg',
+    'static/gallery/photo4.jpg',
+    'static/gallery/photo5.jpg',
+]
