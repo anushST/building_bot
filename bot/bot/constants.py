@@ -44,12 +44,12 @@ DATABASE = 'bot/db.sqlite3'
 # Photos
 MAIN_IMAGE = 'main.png'
 photo_gallery_urls = [
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo1.jpg',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo2.jpg',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo3.jpg',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo4.jpg',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo5.jpg',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo6.jpg',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo7.jpg',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo8.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo1.png',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo2.png',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo3.png',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo4.png',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo5.png',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo6.png',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo7.png',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo8.png',
 ]
