@@ -5,7 +5,8 @@ from functools import wraps
 
 from telegram.error import BadRequest
 
-from .exceptions import LangNotChosenError, MultipleMessageIdInDB
+from .exceptions import (LangNotChosenError, MultipleMessageIdInDB,
+                         ObjectDoesNotExistError)
 from display_data import texts
 
 logger = logging.getLogger('main')
@@ -23,6 +24,8 @@ def safe_handler_method(func):
             inform_user = True
             message = texts.LANG_NOT_CHOSEN_ERROR_TEXT
         except MultipleMessageIdInDB:
+            inform_user = True
+        except ObjectDoesNotExistError:
             inform_user = True
         except BadRequest as e:
             if not str(e) == ('Message is not modified: specified new message '

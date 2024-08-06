@@ -260,8 +260,6 @@ def floor_info(update: Update, context: CallbackContext) -> None:
     if lang is None:
         raise LangNotChosenError
     keyboard = [
-        [InlineKeyboardButton(buttons.REGISTER_BUTTON[lang],
-                              constants.REGISTER_URL)],
         [InlineKeyboardButton(buttons.BACK_BUTTON[lang],
                               callback_data=(constants.FLOORS_PATTERN +
                                              f'{block_name}&1'))]
@@ -302,8 +300,7 @@ def show_gallery(update: Update, context: CallbackContext) -> None:
     photos = []
 
     for photo_url in constants.photo_gallery_urls:
-        with open(photo_url, 'rb') as file:
-            photos.append(InputMediaPhoto(file))
+        photos.append(InputMediaPhoto(photo_url))
 
     query.message.reply_media_group(media=photos)
 

@@ -1,6 +1,5 @@
 """Constants of bot package."""
-# Images
-MAIN_IMAGE = 'main.jpg'
+# flake8: noqa: E501
 
 # Languages
 TJ = 'tj'
@@ -42,11 +41,15 @@ ITEMS_PER_PAGE = 10
 # Database
 DATABASE = 'bot/db.sqlite3'
 
-# Photo Gallery
+# Photos
+MAIN_IMAGE = 'main.png'
 photo_gallery_urls = [
-    'static/gallery/photo1.jpg',
-    'static/gallery/photo2.jpg',
-    'static/gallery/photo3.jpg',
-    'static/gallery/photo4.jpg',
-    'static/gallery/photo5.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo1.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo2.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo3.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo4.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo5.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo6.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo7.jpg',
+    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo8.jpg',
 ]
