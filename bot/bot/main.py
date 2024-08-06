@@ -14,7 +14,7 @@ from .decorators import safe_handler_method
 from .exceptions import BadRequestError, LangNotChosenError, NoTokenError
 from display_data import buttons, texts
 from utils.paginators import Paginator
-from utils.shortcuts import edit_message_caption, send_photo
+from utils.shortcuts import edit_message_caption_or_text
 
 logger = logging.getLogger('main')
 logger.setLevel(logging.DEBUG)
@@ -69,6 +69,20 @@ def save_lang(update: Update, context: CallbackContext) -> None:
     main_menu(update, context)
 
 
+def get_main_buttons(lang):
+    """Return main inline keyboards."""
+    return [
+        [InlineKeyboardButton(buttons.PHOTO_GALLERY_BUTTON[lang],
+                              callback_data=constants.PHOTO_GALLERY_CALLBACK)],
+        [InlineKeyboardButton(buttons.HOUSE_PLAN_BUTTON[lang],
+                              callback_data=constants.BLOCK_PLAN_CALLBACK)],
+        [InlineKeyboardButton(buttons.ABOUT_COMPANY_BUTTON[lang],
+                              callback_data=constants.COMPANY_DESC_CALLBACK)],
+        [InlineKeyboardButton(buttons.CONTACT_INFO_BUTTON[lang],
+                              callback_data=constants.CONTACT_INFO_CALLBACK),],
+    ]
+
+
 @safe_handler_method
 def main_menu(update: Update, context: CallbackContext) -> None:
     """Send main menu.
@@ -82,31 +96,22 @@ def main_menu(update: Update, context: CallbackContext) -> None:
     if lang is None:
         raise LangNotChosenError
 
-    keyboard = [
-        [InlineKeyboardButton(buttons.PHOTO_GALLERY_BUTTON[lang],
-                              callback_data=constants.PHOTO_GALLERY_CALLBACK)],
-        [InlineKeyboardButton(buttons.HOUSE_PLAN_BUTTON[lang],
-                              callback_data=constants.BLOCK_PLAN_CALLBACK)],
-        [InlineKeyboardButton(buttons.ABOUT_COMPANY_BUTTON[lang],
-                              callback_data=constants.COMPANY_DESC_CALLBACK)],
-        [InlineKeyboardButton(buttons.CONTACT_INFO_BUTTON[lang],
-                              callback_data=constants.CONTACT_INFO_CALLBACK),],
-    ]
+    keyboard = get_main_buttons(lang)
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     user_object = db_queries.User(chat_id)
     if not user_object.get_field('main_message_id'):
-        message = send_photo(
-            url=constants.MAIN_IMAGE,
-            bot=context.bot,
+        message = context.bot.send_photo(
             chat_id=chat_id,
+            photo=constants.MAIN_IMAGE_ID,
             caption=texts.WELCOME_TEXT[lang],
             reply_markup=reply_markup,
             parse_mode='HTML'
         )
         user_object.edit_field('main_message_id', message.message_id)
     else:
-        edit_message_caption(query, texts.WELCOME_TEXT[lang], reply_markup)
+        edit_message_caption_or_text(query, texts.WELCOME_TEXT[lang],
+                                     reply_markup=reply_markup)
     if 'lang_message_id' in context.bot_data:
         context.bot.delete_message(chat_id,
                                    context.bot_data['lang_message_id'])
@@ -130,8 +135,9 @@ def contact_info(update: Update, context: CallbackContext) -> None:
                               callback_data=constants.MAIN_MENU_CALLBACK)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    edit_message_caption(query, texts.CONTACTS_TEXT[lang], reply_markup,
-                         parse_mode='HTML')
+    edit_message_caption_or_text(query, texts.CONTACTS_TEXT[lang],
+                                 reply_markup=reply_markup,
+                                 parse_mode='HTML')
 
 
 @safe_handler_method
@@ -147,8 +153,9 @@ def about_company(update: Update, context: CallbackContext) -> None:
                               callback_data=constants.MAIN_MENU_CALLBACK)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    edit_message_caption(query, texts.ABOUT_COMPANY_TEXT[lang], reply_markup,
-                         parse_mode='HTML')
+    edit_message_caption_or_text(query, texts.ABOUT_COMPANY_TEXT[lang],
+                                 reply_markup=reply_markup,
+                                 parse_mode='HTML')
 
 
 @safe_handler_method
@@ -180,10 +187,9 @@ def building_parts(update: Update, context: CallbackContext) -> None:
         chat_id).get_field('main_message_id')
     caption = texts.BUILDING_PLAN_TEXT[lang]
     if not main_message_id:
-        message = send_photo(
-            url=constants.MAIN_IMAGE,
-            bot=context.bot,
+        message = context.bot.send_photo(
             chat_id=chat_id,
+            photo=constants.MAIN_IMAGE_ID,
             caption=caption,
             reply_markup=reply_markup,
             parse_mode='HTML'
@@ -197,7 +203,9 @@ def building_parts(update: Update, context: CallbackContext) -> None:
                                             message.message_id)
 
     else:
-        edit_message_caption(query, caption, reply_markup, parse_mode='HTML')
+        edit_message_caption_or_text(query, caption,
+                                     reply_markup=reply_markup,
+                                     parse_mode='HTML')
 
 
 @safe_handler_method
@@ -230,9 +238,8 @@ def floors(update: Update, context: CallbackContext) -> None:
         chat_id).get_field('block_info_message_id')
     caption = texts.BUILDING_PARTS[block_name][lang]['text']
     if not block_info_message_id:
-        message = send_photo(
-            url=texts.BUILDING_PARTS[block_name]['default_photo'],
-            bot=context.bot,
+        message = context.bot.send_photo(
+            photo=texts.BUILDING_PARTS[block_name]['default_photo'],
             chat_id=chat_id,
             caption=caption,
             reply_markup=reply_markup,
@@ -246,7 +253,9 @@ def floors(update: Update, context: CallbackContext) -> None:
         db_queries.User(chat_id).edit_field('block_info_message_id',
                                             message.message_id)
     else:
-        edit_message_caption(query, caption, reply_markup, parse_mode='HTML')
+        edit_message_caption_or_text(query, caption,
+                                     reply_markup=reply_markup,
+                                     parse_mode='HTML')
 
 
 @safe_handler_method
@@ -270,10 +279,9 @@ def floor_info(update: Update, context: CallbackContext) -> None:
     caption = (texts.BUILDING_PARTS[block_name]['floors'][floor_name]
                [lang]['text'])
     if not course_info_message_id:
-        message = send_photo(
-            url=(texts.BUILDING_PARTS[block_name]['floors'][floor_name]
-                 ['photo']),
-            bot=context.bot,
+        message = context.bot.send_photo(
+            photo=(texts.BUILDING_PARTS[block_name]['floors'][floor_name]
+                   ['photo']),
             chat_id=chat_id,
             caption=caption,
             reply_markup=reply_markup,
@@ -303,6 +311,17 @@ def show_gallery(update: Update, context: CallbackContext) -> None:
         photos.append(InputMediaPhoto(photo_url))
 
     query.message.reply_media_group(media=photos)
+    keyboard = get_main_buttons(lang)
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    cureent_message_id, message_name = db_queries.User(
+            chat_id).current_message_id()
+    message = query.message.reply_text(texts.WELCOME_TEXT[lang],
+                                       reply_markup=reply_markup)
+    if cureent_message_id:
+        query.delete_message(cureent_message_id)
+        db_queries.User(chat_id).edit_field(message_name, None)
+    db_queries.User(chat_id).edit_field('main_message_id',
+                                        message.message_id)
 
 
 @safe_handler_method

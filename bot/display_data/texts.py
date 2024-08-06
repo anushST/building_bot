@@ -51,21 +51,21 @@ BUILDING_PARTS = {
         RU: {'text': ('🏢 <b>Блок 1: Архитектурное Чудо</b>\n'
                       'Здание, возведенное с учетом самых современных архитектурных тенденций, представляет собой гармоничное сочетание эстетики и функциональности. 🏙️'),
              'button_text': 'Блок А'},
-        'default_photo': 'first_floor.jpg',
+        'default_photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ',
         'floors': {
             'floor-1': {
                 TJ: {'text': 'Информация блоки А этажи 1',
                      'button_text': '1 этаж'},
                 RU: {'text': 'Информация о блоке А этаж 1',
                      'button_text': '1 этаж'},
-                'photo': 'first_floor.jpg'
+                'photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ'
             },
             'floor-2': {
                 TJ: {'text': 'Информация блоки А этажи 2',
                      'button_text': '2 этаж'},
                 RU: {'text': 'Информация о блоке А этаж 2',
                      'button_text': '2 этаж'},
-                'photo': 'first_floor.jpg'
+                'photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ'
             }
         }
     },
@@ -75,21 +75,21 @@ BUILDING_PARTS = {
         RU: {'text': ('🛠️ <b>Блок 2: Инновационные Технологии</b>\n'
                       'В строительстве здания использованы передовые технологии и материалы, обеспечивающие максимальную энергоэффективность и комфорт для жителей. 🌐'),
              'button_text': 'Блок Б'},
-        'default_photo': 'first_floor.jpg',
+        'default_photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ',
         'floors': {
             'floor-1': {
                 TJ: {'text': 'Информация блоки Б этажи 1',
                      'button_text': '1 этаж'},
                 RU: {'text': 'Информация о блоке Б этаж 1',
                      'button_text': '1 этаж'},
-                'photo': 'first_floor.jpg'
+                'photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ'
             },
             'floor-2': {
                 TJ: {'text': 'Информация блоки Б этажи 2',
                      'button_text': '2 этаж'},
                 RU: {'text': 'Информация о блоке Б этаж 2',
                      'button_text': '2 этаж'},
-                'photo': 'first_floor.jpg'
+                'photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ'
             }
         }
     },
@@ -99,21 +99,21 @@ BUILDING_PARTS = {
         RU: {'text': ('🌳 <b>Блок 3: Экологичность и Устойчивое Развитие</b>\n'
                       'Здание спроектировано с учетом экологических стандартов и принципов устойчивого развития. 🌿'),
              'button_text': 'Блок С'},
-        'default_photo': 'first_floor.jpg',
+        'default_photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ',
         'floors': {
             'floor-1': {
                 TJ: {'text': 'Информация блоки С этажи 1',
                      'button_text': '1 этаж'},
                 RU: {'text': 'Информация о блоке С этаж 1',
                      'button_text': '1 этаж'},
-                'photo': 'first_floor.jpg'
+                'photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ'
             },
             'floor-2': {
                 TJ: {'text': 'Информация блоки С этажи 2',
                      'button_text': '2 этаж'},
                 RU: {'text': 'Информация о блоке С этаж 2',
                      'button_text': '2 этаж'},
-                'photo': 'first_floor.jpg'
+                'photo': 'AgACAgIAAxkDAAIC62ayDm-b36EdaGTO201ylEUxni9bAAK45DEbq6qISQfhZ71LkrLfAQADAgADcwADNQQ'
             }
         }
     },

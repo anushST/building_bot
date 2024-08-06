@@ -42,14 +42,14 @@ ITEMS_PER_PAGE = 10
 DATABASE = 'bot/db.sqlite3'
 
 # Photos
-MAIN_IMAGE = 'main.png'
+MAIN_IMAGE_ID = 'AgACAgIAAxkDAAICiWayBksXICgDfowMlVyuws4UctoJAAL65DEbq6qISYevw9bEKaKQAQADAgADcwADNQQ'
 photo_gallery_urls = [
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo1.png',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo2.png',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo3.png',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo4.png',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo5.png',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo6.png',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo7.png',
-    'https://raw.githubusercontent.com/anushST/building_bot/develop/bot/static/gallery/photo8.png',
+    'AgACAgQAAxkDAAIC1WayDISKQnGcabK2j5p6ShF8c4HNAAJBtTEbg6eNUVQqfPhjVh3TAQADAgADcwADNQQ',
+    'AgACAgQAAxkDAAIC1mayDIQdKczy5RmdJmdIY3cDt4FjAAKbtDEbmkuVUTqV_x8Bl19zAQADAgADcwADNQQ',
+    'AgACAgQAAxkDAAIC12ayDISVPxvC78BTZqetn1syECLvAALNtDEbfRWVUWAyj1D_B2bJAQADAgADcwADNQQ',
+    'AgACAgQAAxkDAAIC2GayDISB97pQvPNFqMfCc5oAAfPoxAACp7QxG2YmjFFEw65ko0wGrAEAAwIAA3MAAzUE',
+    'AgACAgQAAxkDAAIC2WayDIQd5XSOV1eDO7a7MFy2L6fFAAJ4tDEbEGqVUTWflZDyCTjpAQADAgADcwADNQQ',
+    'AgACAgQAAxkDAAIC2mayDISaiX4o_gUxWSywA2ql0fkKAAIFtTEbx22UUS9Aw1yucWgoAQADAgADcwADNQQ',
+    'AgACAgQAAxkDAAIC22ayDIRngjXRtFbQ81phU-I92r5EAAKBtDEbnsGVUYClLIi0NAd-AQADAgADcwADNQQ',
+    'AgACAgQAAxkDAAIC3GayDIQZtHaglEXveUOs-xkIQRX2AAJztDEbcTaUUTLy2Ms5c3VRAQADAgADcwADNQQ',
 ]
